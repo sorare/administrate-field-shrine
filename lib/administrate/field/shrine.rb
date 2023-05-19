@@ -1,10 +1,15 @@
-require "administrate/field/base"
-require "rails"
+require 'administrate/field/base'
+require 'rails'
 
 module Administrate
   module Field
     class Shrine < Administrate::Field::Base
       class Engine < ::Rails::Engine
+      end
+
+      def data
+        derivative = options.fetch(:derivative, nil)
+        derivative ? resource.send(attribute, derivative) : resource.send(attribute)
       end
 
       def url
